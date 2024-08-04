@@ -4,9 +4,29 @@ https://sprig.hackclub.com/gallery/getting_started
 
 @title: Arcade runner
 @author: Artem4852
-@tags: []
+@tags: [endless]
 @addedOn: 2024-00-00
+
+Controls:
+W - up
+S - down
+Everything else on screen :p
 */
+
+const collectedTicket = tune`
+139.53488372093022: F4-139.53488372093022,
+139.53488372093022: F4-139.53488372093022,
+4186.0465116279065`;
+const collectedBug = tune`
+96.46302250803859,
+96.46302250803859: G5^96.46302250803859,
+96.46302250803859: G5^96.46302250803859,
+2797.427652733119`;
+const lost = tune`
+205.4794520547945: C5-205.4794520547945 + D5-205.4794520547945,
+205.4794520547945: B4-205.4794520547945 + A4-205.4794520547945,
+205.4794520547945: E4-205.4794520547945 + F4-205.4794520547945,
+5958.904109589041`;
 
 const player = "p";
 const ticket = "t";
@@ -1988,6 +2008,7 @@ function resetGame() {
   lastMove = startTime - 1000;
   malfunction = 0;
   score = 0;
+  speed = 1;
 }
 
 let banned;
@@ -1997,14 +2018,17 @@ let lastMove;
 let malfunction;
 let score;
 let start;
+let speed;
 
 onInput("w", () => {
+  if (banned || malfunction > 5 || start) return
   if (getFirst(player).y != 3 && Math.random() > malfunction * 0.2) {
     getFirst(player).y -= 1
   }
 });
 
 onInput("s", () => {
+  if (banned || malfunction > 5 || start) return
   if (Math.random() > malfunction * 0.2) {
     getFirst(player).y += 1
   }
@@ -2026,7 +2050,7 @@ onInput("d", () => {
 function gameLoop() {
   if (!start && !banned && malfunction < 5 && performance.now()-startTime <= 1000000) {
     // Spawning new tickets
-    if (performance.now()-lastSpawn >= 500) {
+    if (performance.now()-lastSpawn >= Math.max(800/speed, 300)) {
       const x = 9;
       const y = Math.floor(Math.random()*5)+3;
       const rand = Math.random();
@@ -2041,7 +2065,8 @@ function gameLoop() {
     }
 
     // Moving everything
-    if (performance.now()-lastMove >= 700) {
+    if (performance.now()-lastMove >= Math.max(700/speed, 300)) {
+      speed += 0.005;
       const tickets = getAll("t");
       const bans = getAll("b");
       const bugs = getAll("B");
@@ -2069,8 +2094,10 @@ function gameLoop() {
     sprites.forEach(sprite => {
       if (getTile(sprite.x, sprite.y).some(spriteC => spriteC.type === "p")) {
         if (sprite.type === "t") {
+          playTune(collectedTicket);
           score++;
         } else if (sprite.type === "B") {
+          playTune(collectedBug);
           malfunction++;
         } else if (sprite.type === "b") {
           banned = true;
@@ -2099,6 +2126,7 @@ function gameLoop() {
   }
   else if (!start) {
     clearText()
+    playTune(lost);
     addText(`  ${score}`, {
       x: 1,
       y: 1, 
