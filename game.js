@@ -19,6 +19,10 @@ const sky = "s";
 const sky2 = "S";
 const sky3 = "c";
 const sky4 = "C";
+const skyCovered = "~"
+const skyCovered2 = "_"
+const skyCovered3 = "?"
+const skyCovered4 = "|"
 
 const road0 = "a";
 const road1 = "A";
@@ -56,25 +60,34 @@ const bottomMenu15 = "/";
 
 const plainGrey = "<";
 const plainGreyDark = ">";
+const quarterGrey = "Q";
+const halfGrey = "1";
+const greyHalf = "2";
+const darkGreyHalf = "3";
+const halfDarkGrey = "4";
+const cornerTLGrey = "5";
+const cornerTRGrey = "6";
+const cornerBLGrey = "7";
+const cornerBRGrey = "8";
 
 setLegend(
-  [ player, bitmap`................
-  ................
-  ...666666.......
-  ..666666666...9.
-  .66666699999.99.
-  .6666999999999F.
-  .669999999999FF.
-  .999999999999FF.
-  .999999999999FF.
-  .999999999999FF.
-  .9999999999999F.
-  .99999999999.99.
-  ..999999999...9.
-  ...999999.......
-  ................
-  ................
-  ` ],
+  [ player, bitmap`
+................
+................
+...666666.......
+..666666666...9.
+.66666699999.99.
+.6666999999999F.
+.669999999999FF.
+.999999999999FF.
+.999999999999FF.
+.999999999999FF.
+.9999999999999F.
+.99999999999.99.
+..999999999...9.
+...999999.......
+................
+................` ],
   [ ticket, bitmap`
 ................
 ................
@@ -217,6 +230,74 @@ setLegend(
 7777777777777777
 7722222277777777
 7222222222777777
+7722222222777777
+7722222222777777
+7772222277777722
+7777777777777222
+7777777722222222
+7777777222222222
+7777777222222222
+7777777772222222
+7777777777772222
+7777777777777777
+7777777777777777
+7777777777777777`],
+  [ skyCovered, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+2222222222227777
+2222222222222277
+2222222222222277
+2222222222222277
+2222222222227777
+2222222222777777
+2222222227777777
+7777777777777777
+7777777777777777
+7777777777777777
+7777777777777777
+7777777777777777`],
+  [ skyCovered2, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+7222222277772222
+7222222222222222
+7222222222222222
+7222222222222222
+7772222222222222
+7777777222222222
+7777777722222222
+7777777777777777
+7777777777777777
+7777777777777777
+7777777777777777
+7777777777777777`],
+  [ skyCovered3, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+7777777777777777
+7777777777777777
+2227777777777777
+2222222227777777
+2222222227777777
+2222222222777777
+2222222227777777
+2222222277777777
+2222777777777777
+7777777777777777
+7777777777777777
+7777777777777777`],
+  [ skyCovered4, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
 7722222222777777
 7722222222777777
 7772222277777722
@@ -824,15 +905,168 @@ LLLLLLLLLLLLLLLL
 LLLLLLLLLLLLLLLL
 LLLLLLLLLLLLLLLL
 LLLLLLLLLLLLLLLL
-LLLLLLLLLLLLLLLL`]
+LLLLLLLLLLLLLLLL`],
+  [ halfGrey, bitmap`
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111`],
+  [ greyHalf, bitmap`
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL`],
+  [ quarterGrey, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................` ],
+  [ darkGreyHalf, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL`],
+  [ halfDarkGrey, bitmap`
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL`],
+  [ cornerTLGrey, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL`],
+  [ cornerTRGrey, bitmap`
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111`],
+  [ cornerBLGrey, bitmap`
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+11111111LLLLLLLL
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111`],
+  [ cornerBRGrey, bitmap`
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+LLLLLLLL11111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111`],
 )
 
 setSolids([])
 
 let level = map`
-SsCcSsSsCc
-sCcSsCcSsC
-klijklkijl
+>>>>>>>>>>
+~|?_~|?_~|
+SsSsCcSsCc
 oqmnoqmnoq
 DdaADdaADd
 ghefghefgh
@@ -842,11 +1076,11 @@ setMap(level);
 
 let menu = map`
 >>>>>>>>>>
-<<<<<<<<<<
-<>>>>>>>><
-<>>>>>>>><
-<>>>>>>>><
-<>>>>>>>><
+5333333336
+2>>>>>>>>1
+2>>>>>>>>1
+2>>>>>>>>1
+2>>>>>>>>1
 <!@#$%^&*<
 <()-+[]'/<`;
 
@@ -854,15 +1088,31 @@ addSprite(0, 0, "T");
 addSprite(9, 0, "G");
 addSprite(0, 4, "p");
 
-let banned = false;
-let startTime = performance.now();
-let lastSpawn = startTime - 1000;
-let lastMove = startTime - 1000;
-let malfunction = 5;
-let score = 0;
+function resetGame() {
+  setMap(level);
+  clearText();
+  addSprite(0, 0, "T");
+  addSprite(9, 0, "G");
+  addSprite(0, 4, "p");
+  banned = false;
+  startTime = performance.now();
+  lastSpawn = startTime - 1000;
+  lastMove = startTime - 1000;
+  malfunction = 0;
+  score = 0;
+}
+
+let banned;
+let startTime;
+let lastSpawn;
+let lastMove;
+let malfunction;
+let score;
+
+resetGame();
 
 onInput("w", () => {
-  if (getFirst(player).y != 2 && Math.random() > malfunction * 0.2) {
+  if (getFirst(player).y != 3 && Math.random() > malfunction * 0.2) {
     getFirst(player).y -= 1
   }
 })
@@ -873,17 +1123,26 @@ onInput("s", () => {
   }
 })
 
+onInput("a", () => {
+  return;
+})
+    
+onInput("d", () => {
+  if (!banned && malfunction < 5) return
+  resetGame();
+  gameLoop();
+})
+
 function gameLoop() {
   if (!banned && malfunction < 5 && performance.now()-startTime <= 1000000) {
     // Spawning new tickets
     if (performance.now()-lastSpawn >= 500) {
       const x = 9;
-      const y = Math.floor(Math.random()*6)+2;
+      const y = Math.floor(Math.random()*5)+3;
       const rand = Math.random();
-      console.log(rand, rand > 0.4, 0.4 > rand > 0.2);
-      if (rand > 0.4) {
+      if (rand > 0.5) {
         addSprite(x, y, "t");
-      } else if (rand > 0.05) {
+      } else if (rand > 0.1) {
         addSprite(x, y, "B");
       } else {
         addSprite(x, y, "b");
@@ -949,8 +1208,20 @@ function gameLoop() {
     setTimeout(gameLoop, 1000/60)
   }
   else {
+    clearText()
+    addText(`  ${score}`, {
+      x: 1,
+      y: 1, 
+      color: color`2`
+    });
+
+    addText(`${malfunction}`, {
+      x: 16,
+      y: 1, 
+      color: color`2`
+    });
     if (banned) {
-      text = `Womp womp. You \nwere banned and \nlost ${score} tickets. \nBetter luck \nnext time.`
+      text = `Womp womp. You \nwere banned and \nlost all your \n${score} tickets. \nBetter luck \nnext time.`
     } else if (malfunction >= 5) {
       text = `Oh no, you \ncollected too \nmany bugs and \nnow all your ${score} \ntickets flew \naway. Better \nluck next time.`
     }
@@ -962,25 +1233,6 @@ function gameLoop() {
       y: 4, 
       color: color`2`
     });
-
-    onInput("a", () => {
-      return;
-    })
-    
-    onInput("d", () => {
-      setMap(level);
-      clearText();
-      addSprite(0, 0, "T");
-      addSprite(9, 0, "G");
-      addSprite(0, 4, "p");
-      banned = false;
-      startTime = performance.now();
-      lastSpawn = startTime - 1000;
-      lastMove = startTime - 1000;
-      malfunction = 0;
-      score = 0;
-      gameLoop();
-    })
   }
 }
 
