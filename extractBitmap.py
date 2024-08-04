@@ -1,6 +1,7 @@
 from PIL import Image
+import pyperclip, string
 
-filename = "bottomMenu"
+filename = "startMenu"
 size = 16 # size of bitmap
 
 im = Image.open(f"{filename}.png")
@@ -53,4 +54,20 @@ for y in range(height//size):
         output += f"[ {filename}{n}, bitmap`{bitmap}` ],\n"
         n += 1
 
-print(output)
+pyperclip.copy(output)
+print(n)
+input("Press Enter to continue...")
+with open("game.js", "r") as f:
+    lines = f.readlines()
+
+characters = string.ascii_uppercase + string.ascii_lowercase + string.digits + "!#$%&'()*+,-/:;<=>?@[]^_{|}~©®℗™℠№ªº℔℥℆÷±"
+charactersUsed = []
+for line in lines:
+    if '= "' in line: charactersUsed.append(line.split('"')[1])
+charactersLeft = [c for c in characters if c not in charactersUsed]
+print(len(charactersLeft))
+
+output2 = ""
+for i in range(n):
+    output2 += f"const {filename}{i} = \"{charactersLeft[i]}\";\n"
+pyperclip.copy(output2)
